@@ -29,7 +29,7 @@ export default function Home() {
     <main
       className="min-h-screen flex items-center justify-center"
       style={{
-        background: "radial-gradient(circle at center, #1E40AF, #000000)",
+        background: "radial-gradient(circle at center, #44A096, #000000)",
       }}
     >
       <style jsx global>

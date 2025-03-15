@@ -9,10 +9,10 @@ const schema = z.object({
   email: z.string().email('Invalid email address'),
 })
 
-export async function joinWaitlist(prevState: any, formData: FormData) {
+export async function joinWaitlist(prevState: Record<string, unknown>, formData: FormData) {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY)
-    const email = formData.get('email')
+    const email = formData.get('email')?.toString()
     
     if (!email) {
       return { success: false, message: 'Email is required' }
@@ -25,14 +25,14 @@ export async function joinWaitlist(prevState: any, formData: FormData) {
     }
 
     // Store email in Upstash Redis
-    await redis.sadd('waitlist_emails', email.toString())
+    await redis.sadd('waitlist_emails', email)
 
     // Send welcome email using Resend
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: 'RelayHelp <onboarding@resend.dev>',
-      to: email.toString(),
+      to: email,
       subject: 'Welcome to Our Waitlist!',
-      html: EmailTemplate({ email: email.toString() }),
+      html: EmailTemplate({ email }),
     })
 
     if (error) {
@@ -60,8 +60,7 @@ export async function getWaitlistCount() {
   try {
     const count = await redis.scard('waitlist_emails')
     return count
-  } catch (error) {
+  } catch {
     return 0
   }
 }
-

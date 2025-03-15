@@ -7,18 +7,19 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
-// Remove this line:
-// import { useToast } from "@/components/ui/use-toast"
+
 
 interface WaitlistFormProps {
   onSuccess: (count: number) => void
 }
 
 export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
-  const [state, formAction, isPending] = useActionState(joinWaitlist, null)
+  const [state, formAction, isPending] = useActionState(
+    (state: Record<string, unknown>, formData: FormData) => joinWaitlist(state, formData),
+    { success: false, message: "", count: 0 }
+  )
   const [email, setEmail] = useState("")
-  // Remove this line:
-  // const { toast } = useToast()
+
 
   useEffect(() => {
     if (state?.success) {
@@ -65,4 +66,3 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
     </form>
   )
 }
-
