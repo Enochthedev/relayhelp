@@ -1,0 +1,42 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd apps/backend
+          npm install
+
+      - name: Run Tests
+        run: |
+          cd apps/backend
+          npm test
+
+      - name: Build Docker Image
+        run: |
+          cd apps/backend
+          docker build -t relayhelp-backend .
+
+      - name: Push to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker tag relayhelp-backend yourdockerhub/relayhelp-backend
+          docker push yourdockerhub/relayhelp-backend
+
+      - name: Deploy to VPS
+        run: ssh user@your-server-ip "docker pull yourdockerhub/relayhelp-backend && docker compose up -d"

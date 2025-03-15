@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: ./apps/backend
+    ports:
+      - "5000:3000"
+    env_file:
+      - apps/backend/.env
+    depends_on:
+      - db
+
+  frontend:
+    build: ./apps/frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:14
+    container_name: relayhelp-db
+    restart: always
+    environment:
+      POSTGRES_USER: relayhelp
+      POSTGRES_PASSWORD: relayhelp
+      POSTGRES_DB: relayhelpdb
+    ports:
+      - "5432:5432"
