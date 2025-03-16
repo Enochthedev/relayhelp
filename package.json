@@ -2,15 +2,15 @@
     "name": "relayhelp-monorepo",
     "private": true,
     "scripts": {
-      "dev:backend": "cd apps/backend && npm run start:dev",
-      "dev:frontend": "cd apps/frontend && npm run dev",
-      "build": "turbo run build"
+        "dev:backend": "cd apps/backend && npm run start:dev",
+        "dev:frontend": "cd apps/frontend && npm run dev",
+        "build": "turbo run build"
     },
     "workspaces": [
-      "apps/*",
-      "packages/*"
+        "apps/*",
+        "packages/*"
     ],
     "devDependencies": {
-      "turbo":"2.2.4.4"
+        "turbo": "^2.4.4"
     }
-  }
+}
