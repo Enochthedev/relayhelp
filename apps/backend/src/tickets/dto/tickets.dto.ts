@@ -1,5 +1,7 @@
 import { IsString, IsNotEmpty, IsOptional, IsEnum, IsUUID, IsArray, IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { TicketMessage } from '../../messages/message.entity'; 
+import { MessageResponseDto } from '../../messages/dto/message.dto';
 
 export enum TicketStatus {
   OPEN = 'open',
@@ -28,6 +30,11 @@ export class CreateTicketDto {
   @IsString()
   @IsOptional()
   requesterName?: string;
+
+  @ApiProperty({ example: 'tenant-id-123' })
+  @IsUUID()
+  @IsNotEmpty()
+  UserId : string;
 }
 
 export class UpdateTicketDto {
@@ -161,4 +168,15 @@ export class TicketResponseDto {
   @IsString()
   @IsOptional()
   requesterEmail?: string; // Added requester email
+
+  @ApiProperty({ type: () => MessageResponseDto, isArray: true })
+  @IsOptional()
+  messages?: {
+    data: TicketMessage[];
+    pagination: {
+      currentPage: number;
+      totalPages: number;
+      totalMessages: number;
+    };
+};
 }

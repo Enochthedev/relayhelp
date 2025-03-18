@@ -48,4 +48,52 @@ export class ConfigService {
   getDiscordTicketChannelId(): string {
     return this.get('DISCORD_TICKET_CHANNEL_ID');
   }
+
+  getGoogleClientId(): string {
+    return this.get('GOOGLE_CLIENT_ID');
+  }
+
+  getGoogleClientSecret(): string {
+        return this.get('GOOGLE_CLIENT_SECRET');
+  }
+
+  getGoogleRedirectUri(): string {
+        return this.get('GOOGLE_REDIRECT_URI');
+  }
+
+  getGithubClientId(): string {
+    return this.get('GITHUB_CLIENT_ID');
+  }
+
+  getGithubClientSecret(): string {
+        return this.get('GITHUB_CLIENT_SECRET');
+  }
+
+  getGithubRedirectUri(): string {
+            return this.get('GITHUB_REDIRECT_URI');
+  }
+
+  getAppleClientId(): string {
+    return this.get('APPLE_CLIENT_ID');
+  }
+
+  getAppleTeamId(): string {
+    return this.get('APPLE_TEAM_ID');
+  }
+
+  getAppleKeyId(): string {
+    return this.get('APPLE_KEY_ID');
+  }
+
+  getAppleKeyPath(): string {
+    return this.get('APPLE_KEY_PATH');
+  }
+
+  getAppleRedirectUri(): string {
+    return this.get('APPLE_REDIRECT_URI');
+  }
+
+
+
+
 }

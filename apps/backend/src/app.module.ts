@@ -11,9 +11,11 @@ import { TenantsModule } from './tenants/tenants.module';
 import { TeamsModule } from './teams/teams.module';
 import { AuthModule } from './auth/auth.module';
 import { MessagesModule } from './messages/messages.module';
+import { AgentsModule } from './agents/agents.module';
+import { RoleModule } from './roles/roles.module';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, RedisModule, QueueModule, TicketsModule, UsersModule, TenantsModule, TeamsModule, AuthModule, MessagesModule],
+  imports: [ConfigModule, DatabaseModule, RedisModule, QueueModule, TicketsModule, UsersModule, TenantsModule, TeamsModule, AuthModule, MessagesModule, AgentsModule, RoleModule],
   controllers: [AppController],
   providers: [AppService],
 })

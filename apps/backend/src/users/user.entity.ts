@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
 import { Tenant } from '../tenants/tenant.entity';
-import { UserRole } from './dto/users.dto'; 
 
 @Entity()
 export class User {
@@ -11,14 +10,38 @@ export class User {
   email: string;
 
   @Column()
-  password: string;
+  firstName?: string;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })  // Ensure the correct enum is used
-  role: UserRole;
+  @Column()
+  lastName?: string;
 
-  @ManyToOne(() => Tenant, (tenant) => tenant.users, { nullable: false })
-  tenant: Tenant;
+  @Column()
+  password?: string;
+
+  @OneToMany(() => Tenant, (tenant) => tenant.owner) // A user can own multiple tenants
+  tenants: Tenant[];
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column({ nullable: true })
+  twoFactorSecret?: string;
+
+  @Column({ default: false })
+  isTwoFactorEnabled: boolean;
+
+  @Column({ nullable: true })
+  discordId?: string; // Added for OAuth
+
+  @Column({ nullable: true })
+  githubId?: string; // Added for OAuth
+
+  @Column({ nullable: true })
+  appleId?: string; // Added for OAuth
+
+  @Column({ nullable: true })
+  microsoftId?: string; // Added for OAuth
+
+  @Column({ nullable: true })
+  googleId?: string; // Added for OAuth
 }
